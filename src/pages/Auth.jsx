@@ -4,7 +4,6 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -41,11 +40,11 @@ function Auth({ setActive, setUser }) {
         setUser(user);
         setActive("home");
       } else {
-        return toast.error("All fields are mandatory to fill");
+        return alert("Не все поля заполнены");
       }
     } else {
       if (password !== confirmPassword) {
-        return toast.error("Password don't match");
+        return alert("Password don't match");
       }
       if (firstName && lastName && email && password) {
         const { user } = await createUserWithEmailAndPassword(
@@ -56,7 +55,7 @@ function Auth({ setActive, setUser }) {
         await updateProfile(user, { displayName: `${firstName} ${lastName}` });
         setActive("home");
       } else {
-        return toast.error("All fields are mandatory to fill");
+        return alert("Не все поля заполнены");
       }
     }
     navigate("/");
@@ -78,7 +77,7 @@ function Auth({ setActive, setUser }) {
                     <input
                       type="text"
                       className="form-control input-text-box"
-                      placeholder="First Name"
+                      placeholder="Имя"
                       name="firstName"
                       value={firstName}
                       onChange={handleChange}
@@ -88,7 +87,7 @@ function Auth({ setActive, setUser }) {
                     <input
                       type="text"
                       className="form-control input-text-box"
-                      placeholder="Last Name"
+                      placeholder="Фамилия"
                       name="lastName"
                       value={lastName}
                       onChange={handleChange}
@@ -110,7 +109,7 @@ function Auth({ setActive, setUser }) {
                 <input
                   type="password"
                   className="form-control input-text-box"
-                  placeholder="Password"
+                  placeholder="Пароль"
                   name="password"
                   value={password}
                   onChange={handleChange}
@@ -121,7 +120,7 @@ function Auth({ setActive, setUser }) {
                   <input
                     type="password"
                     className="form-control input-text-box"
-                    placeholder="Confirm Password"
+                    placeholder="Повторить пароль"
                     name="confirmPassword"
                     value={confirmPassword}
                     onChange={handleChange}

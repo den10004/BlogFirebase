@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import Details from "./pages/Details";
 import AddEditBlog from "./pages/AddEditBlog";
 import NotFound from "./pages/NotFound";
-import { ToastContainer } from "react-toastify";
 import About from "./pages/About";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
@@ -44,7 +43,7 @@ function App() {
         user={user}
         handleLogout={handleLogout}
       />
-      <ToastContainer position="top-center" />
+
       <Routes>
         <Route
           path="/"

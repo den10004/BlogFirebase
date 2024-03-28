@@ -12,7 +12,6 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { toast } from "react-toastify";
 
 // eslint-disable-next-line react/prop-types
 function AddEditBlog({ user, setActive }) {
@@ -27,11 +26,10 @@ function AddEditBlog({ user, setActive }) {
   };
 
   const categoryOption = [
-    "Technology",
-    "Food",
-    "Travels",
-    "Sports",
-    "Business",
+    "Технологии",
+    "Путешевствия",
+    "Новости",
+    "Бизнес",
     "Другое",
   ];
   const [form, setForm] = useState(initialState);
@@ -55,7 +53,8 @@ function AddEditBlog({ user, setActive }) {
             author: user.displayName,
             userId: user.uid,
           });
-          toast.success("Блог создан");
+
+          alert("Блог создан");
         } catch (err) {
           console.log(err);
         }
@@ -67,13 +66,13 @@ function AddEditBlog({ user, setActive }) {
             author: user.displayName,
             userId: user.uid,
           });
-          toast.success("Блог загружен");
+          alert("Блог загружен");
         } catch (err) {
           console.log(err);
         }
       }
     } else {
-      return toast.error("All fields are mandatory to fill");
+      return alert("ошибка");
     }
 
     navigate("/");
@@ -122,7 +121,7 @@ function AddEditBlog({ user, setActive }) {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-            toast.info("Изображение загружено");
+            alert("Изображение загружено");
             setForm((prev) => ({ ...prev, imgUrl: downloadUrl }));
           });
         }

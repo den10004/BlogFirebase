@@ -11,10 +11,8 @@ import {
   orderBy,
   where,
 } from "firebase/firestore";
-import { isEmpty } from "lodash";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import FeatureBlogs from "../components/FeatureBlogs";
 import Tags from "../components/Tags";
 import { db } from "../firebase";
@@ -72,44 +70,6 @@ function Details({ setActive, user }) {
     setRelatedBlogs(relatedBlogs);
     setActive(null);
     setLoading(false);
-  };
-
-  const handleComment = async (e) => {
-    e.preventDefault();
-    comments.push({
-      createdAt: Timestamp.fromDate(new Date()),
-      userId,
-      name: user?.displayName,
-      body: userComment,
-    });
-    toast.success("Comment posted successfully");
-    await updateDoc(doc(db, "blogs", id), {
-      ...blog,
-      comments,
-      timestamp: serverTimestamp(),
-    });
-    setComments(comments);
-    setUserComment("");
-  };
-
-  const handleLike = async () => {
-    if (userId) {
-      if (blog?.likes) {
-        const index = likes.findIndex((id) => id === userId);
-        if (index === -1) {
-          likes.push(userId);
-          setLikes([...new Set(likes)]);
-        } else {
-          likes = likes.filter((id) => id !== userId);
-          setLikes(likes);
-        }
-      }
-      await updateDoc(doc(db, "blogs", id), {
-        ...blog,
-        likes,
-        timestamp: serverTimestamp(),
-      });
-    }
   };
 
   useEffect(() => {

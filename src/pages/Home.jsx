@@ -1,51 +1,17 @@
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  limit,
-  onSnapshot,
-  query,
-  orderBy,
-  where,
-  startAfter,
-} from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import BlogSection from "../components/BlogSection";
 import Spinner from "../components/Spinner";
 import { db } from "../firebase";
-import { toast } from "react-toastify";
 import Tags from "../components/Tags";
 import FeatureBlogs from "../components/FeatureBlogs";
-import { isEmpty, isNull } from "lodash";
-import { useLocation } from "react-router-dom";
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
 
 function Home({ setActive, user, active }) {
   const [loading, setLoading] = useState(true);
   const [tags, setTags] = useState([]);
-  const [trendBlogs, setTrendBlogs] = useState([]);
   const [blogs, setBlogs] = useState(null);
-  const queryString = useQuery();
-  const searchQuery = queryString.get("searchQuery");
-  const location = useLocation();
-
-  const getTrendingBlogs = async () => {
-    const blogRef = collection(db, "blogs");
-    const trendQuery = query(blogRef, where("trending", "==", "yes"));
-    const querySnapshot = await getDocs(trendQuery);
-    let trendBlogs = [];
-    querySnapshot.forEach((doc) => {
-      trendBlogs.push({ id: doc.id, ...doc.data() });
-    });
-    setTrendBlogs(trendBlogs);
-  };
 
   useEffect(() => {
-    getTrendingBlogs();
     const unsub = onSnapshot(
       collection(db, "blogs"),
       (snapshot) => {
@@ -68,7 +34,6 @@ function Home({ setActive, user, active }) {
 
     return () => {
       unsub();
-      getTrendingBlogs();
     };
   }, [setActive, active]);
 
@@ -81,7 +46,7 @@ function Home({ setActive, user, active }) {
       try {
         setLoading(true);
         await deleteDoc(doc(db, "blogs", id));
-        toast.success("Blog deleted successfully");
+        alert("Блог успешно удалён");
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -93,17 +58,10 @@ function Home({ setActive, user, active }) {
     <div className="container-fluid pb-4 pt-4 padding">
       <div className="container padding">
         <div className="row mx-0">
-          {/*       <Trending blogs={trendBlogs} />*/}
           <div className="col-md-8">
             <div className="blog-heading text-start py-2 mb-4">Блоги</div>
-            {blogs.length === 0 && location.pathname !== "/" && (
-              <>
-                <h4>
-                  No Blog found with search keyword:{" "}
-                  <strong>{searchQuery}</strong>
-                </h4>
-              </>
-            )}
+            {blogs.length === 0 && <h4>Блогов нет</h4>}
+
             {blogs?.map((blog) => (
               <BlogSection
                 key={blog.id}
@@ -114,9 +72,9 @@ function Home({ setActive, user, active }) {
             ))}
           </div>
           <div className="col-md-3">
-            <div className="blog-heading text-start py-2 mb-4">Tags</div>
+            <div className="blog-heading text-start py-2 mb-4">Тэги</div>
             <Tags tags={tags} />
-            <FeatureBlogs title={"Most Popular"} blogs={blogs} />
+            <FeatureBlogs title={"Самые популярные"} blogs={blogs} />
           </div>
         </div>
       </div>

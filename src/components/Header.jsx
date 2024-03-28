@@ -38,17 +38,7 @@ function Header({ active, setActive, user, handleLogout }) {
                     }`}
                     onClick={() => setActive("home")}
                   >
-                    Home
-                  </li>
-                </Link>
-                <Link to="/blogs" style={{ textDecoration: "none" }}>
-                  <li
-                    className={`nav-item nav-link ${
-                      active === "blogs" ? "active" : ""
-                    }`}
-                    onClick={() => setActive("blogs")}
-                  >
-                    Blogs
+                    Главная
                   </li>
                 </Link>
 
@@ -59,7 +49,7 @@ function Header({ active, setActive, user, handleLogout }) {
                     }`}
                     onClick={() => setActive("create")}
                   >
-                    Create
+                    Создать блог
                   </li>
                 </Link>
 
@@ -70,7 +60,7 @@ function Header({ active, setActive, user, handleLogout }) {
                     }`}
                     onClick={() => setActive("about")}
                   >
-                    About
+                    О блоге
                   </li>
                 </Link>
               </ul>
