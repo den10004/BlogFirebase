@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import Auth from "./pages/Auth";
 import { auth } from "./firebase";
 import { signOut } from "firebase/auth";
+import TagBlog from "./pages/TagBlog";
 
 function App() {
   const [active, setActive] = useState("home");
@@ -45,8 +46,14 @@ function App() {
       />
       <ToastContainer position="top-center" />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/detail/:id" element={<Details />} />
+        <Route
+          path="/"
+          element={<Home setActive={setActive} active={active} user={user} />}
+        />
+        <Route
+          path="/detail/:id"
+          element={<Details setActive={setActive} user={user} />}
+        />
         <Route
           path="/create"
           element={
@@ -64,6 +71,7 @@ function App() {
           path="/auth"
           element={<Auth setActive={setActive} setUser={setUser} />}
         />
+        <Route path="/tag/:tag" element={<TagBlog setActive={setActive} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

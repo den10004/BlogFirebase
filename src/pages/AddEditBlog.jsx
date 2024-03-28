@@ -122,7 +122,7 @@ function AddEditBlog({ user, setActive }) {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-            toast.info("Image upload to firebase successfully");
+            toast.info("Изображение загружено");
             setForm((prev) => ({ ...prev, imgUrl: downloadUrl }));
           });
         }
@@ -131,6 +131,19 @@ function AddEditBlog({ user, setActive }) {
 
     file && uploadFile();
   }, [file]);
+
+  useEffect(() => {
+    id && getBlogDetail();
+  }, [id]);
+
+  const getBlogDetail = async () => {
+    const docRef = doc(db, "blogs", id);
+    const snapshot = await getDoc(docRef);
+    if (snapshot.exists()) {
+      setForm({ ...snapshot.data() });
+    }
+    setActive(null);
+  };
 
   return (
     <div className="container-fluid mb-4">
