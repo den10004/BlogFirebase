@@ -14,11 +14,21 @@ const FeatureBlogs = ({ blogs, title }) => {
           onClick={() => navigate(`/detail/${item.id}`)}
         >
           <div className="col-5 align-self-center">
-            <img
-              src={item.imgUrl}
-              alt={item.title}
-              className="most-popular-img"
-            />
+            {item.imgUrl ? (
+              <img
+                src={item.imgUrl}
+                alt={item.title}
+                className="most-popular-img"
+              />
+            ) : (
+              <div
+                style={{
+                  backgroundColor: "gray",
+                  height: "80px",
+                  opacity: "0.4",
+                }}
+              ></div>
+            )}
           </div>
           <div className="col-7 padding">
             <div className="text-start most-popular-font">{item.title}</div>

@@ -5,9 +5,6 @@ import {
   getDocs,
   limit,
   query,
-  serverTimestamp,
-  Timestamp,
-  updateDoc,
   orderBy,
   where,
 } from "firebase/firestore";
@@ -25,10 +22,6 @@ function Details({ setActive, user }) {
   const [blog, setBlog] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [tags, setTags] = useState([]);
-  const [comments, setComments] = useState([]);
-  let [likes, setLikes] = useState([]);
-  const [userComment, setUserComment] = useState("");
-  const [relatedBlogs, setRelatedBlogs] = useState([]);
 
   useEffect(() => {
     const getRecentBlogs = async () => {
@@ -60,14 +53,13 @@ function Details({ setActive, user }) {
       blogRef,
       where("tags", "array-contains-any", blogDetail.data().tags, limit(3))
     );
-    setComments(blogDetail.data().comments ? blogDetail.data().comments : []);
-    setLikes(blogDetail.data().likes ? blogDetail.data().likes : []);
+
     const relatedBlogSnapshot = await getDocs(relatedBlogsQuery);
     const relatedBlogs = [];
     relatedBlogSnapshot.forEach((doc) => {
       relatedBlogs.push({ id: doc.id, ...doc.data() });
     });
-    setRelatedBlogs(relatedBlogs);
+
     setActive(null);
     setLoading(false);
   };
@@ -75,10 +67,6 @@ function Details({ setActive, user }) {
   useEffect(() => {
     id && getBlogDetail();
   }, [id]);
-
-  if (loading) {
-    return <Spinner />;
-  }
 
   return (
     <div className="single">

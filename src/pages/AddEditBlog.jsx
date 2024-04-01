@@ -18,7 +18,6 @@ function AddEditBlog({ user, setActive }) {
   const initialState = {
     title: "",
     tags: [],
-    trending: "no",
     category: "",
     description: "",
     comments: [],
@@ -40,11 +39,11 @@ function AddEditBlog({ user, setActive }) {
 
   const navigate = useNavigate();
 
-  const { title, tags, category, trending, description } = form;
+  const { title, tags, category, description } = form;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (category && tags && title && description && trending) {
+    if (category && tags && title && description) {
       if (!id) {
         try {
           await addDoc(collection(db, "blogs"), {
@@ -84,10 +83,6 @@ function AddEditBlog({ user, setActive }) {
 
   const onCategoryChange = (e) => {
     setForm({ ...form, category: e.target.value });
-  };
-
-  const handleTrending = (e) => {
-    setForm({ ...form, trending: e.target.value });
   };
 
   const handleTags = (tags) => {
@@ -159,7 +154,7 @@ function AddEditBlog({ user, setActive }) {
                 <input
                   type="text"
                   className="form-control input-text-box"
-                  placeholder="Title"
+                  placeholder="Название"
                   name="title"
                   value={title}
                   onChange={handleChange}
@@ -168,44 +163,18 @@ function AddEditBlog({ user, setActive }) {
               <div className="col-12 py-3">
                 <ReactTagInput
                   tags={tags}
-                  placeholder="Tags"
+                  placeholder="Теги"
                   onChange={handleTags}
                 />
               </div>
-              <div className="col-12 py-3">
-                <p className="trending">Is it trending blog ?</p>
-                <div className="form-check-inline mx-2">
-                  <input
-                    type="radio"
-                    className="form-check-input"
-                    value="yes"
-                    name="radioOption"
-                    checked={trending === "yes"}
-                    onChange={handleTrending}
-                  />
-                  <label htmlFor="radioOption" className="form-check-label">
-                    Yes&nbsp;
-                  </label>
-                  <input
-                    type="radio"
-                    className="form-check-input"
-                    value="no"
-                    name="radioOption"
-                    checked={trending === "no"}
-                    onChange={handleTrending}
-                  />
-                  <label htmlFor="radioOption" className="form-check-label">
-                    No
-                  </label>
-                </div>
-              </div>
+
               <div className="col-12 py-3">
                 <select
                   value={category}
                   onChange={onCategoryChange}
                   className="catg-dropdown"
                 >
-                  <option>Please select category</option>
+                  <option>Выберите категорию</option>
                   {categoryOption.map((option, index) => (
                     <option value={option || ""} key={index}>
                       {option}
@@ -216,7 +185,7 @@ function AddEditBlog({ user, setActive }) {
               <div className="col-12 py-3">
                 <textarea
                   className="form-control description-box"
-                  placeholder="Description"
+                  placeholder="Описание"
                   value={description}
                   name="description"
                   onChange={handleChange}

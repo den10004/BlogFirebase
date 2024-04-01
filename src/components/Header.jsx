@@ -42,16 +42,18 @@ function Header({ active, setActive, user, handleLogout }) {
                   </li>
                 </Link>
 
-                <Link to="/create" style={{ textDecoration: "none" }}>
-                  <li
-                    className={`nav-item nav-link ${
-                      active === "create" ? "active" : ""
-                    }`}
-                    onClick={() => setActive("create")}
-                  >
-                    Создать блог
-                  </li>
-                </Link>
+                {userId && (
+                  <Link to="/create" style={{ textDecoration: "none" }}>
+                    <li
+                      className={`nav-item nav-link ${
+                        active === "create" ? "active" : ""
+                      }`}
+                      onClick={() => setActive("create")}
+                    >
+                      Создать блог
+                    </li>
+                  </Link>
+                )}
 
                 <Link to="/about" style={{ textDecoration: "none" }}>
                   <li

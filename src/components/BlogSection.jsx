@@ -20,8 +20,20 @@ const BlogSection = ({
         <div className="col-md-5">
           <div className="hover-blogs-img">
             <div className="blogs-img">
-              <img src={imgUrl} alt={title} />
-              <div></div>
+              {imgUrl ? (
+                <img src={imgUrl} alt={title} />
+              ) : (
+                <div
+                  style={{
+                    backgroundColor: "gray",
+                    height: "100%",
+                    opacity: "0.4",
+                    padding: "10px",
+                  }}
+                >
+                  <h3>Нет изображения</h3>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -38,7 +50,7 @@ const BlogSection = ({
             {excerpt(description, 120)}
           </div>
           <Link to={`/detail/${id}`}>
-            <button className="btn btn-read">Read More</button>
+            <button className="btn btn-read">Подробнее</button>
           </Link>
           {user && user.uid === userId && (
             <div style={{ float: "right" }}>
