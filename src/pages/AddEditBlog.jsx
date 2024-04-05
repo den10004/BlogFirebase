@@ -204,7 +204,7 @@ function AddEditBlog({ user, setActive }) {
                   type="submit"
                   disabled={progress !== null && progress < 100}
                 >
-                  {id ? "Обновить" : "Отправить"}
+                  {id ? "Update" : "Submit"}
                 </button>
               </div>
             </form>
