@@ -13,7 +13,6 @@ import { useParams } from "react-router-dom";
 import FeatureBlogs from "../components/FeatureBlogs";
 import Tags from "../components/Tags";
 import { db } from "../firebase";
-import Spinner from "../components/Spinner";
 
 function Details({ setActive, user }) {
   const userId = user?.uid;

@@ -65,7 +65,7 @@ function Auth({ setActive, setUser }) {
       <div className="container">
         <div className="col-12 text-center">
           <div className="text-center heading py-2">
-            {!signUp ? "Sign-In" : "Sign-Up"}
+            {!signUp ? "Вход" : "Регистрация"}
           </div>
         </div>
         <div className="row h-100 justify-content-center align-items-center">
@@ -79,6 +79,7 @@ function Auth({ setActive, setUser }) {
                       className="form-control input-text-box"
                       placeholder="Имя"
                       name="firstName"
+                      minLength={3}
                       value={firstName}
                       onChange={handleChange}
                     />
@@ -89,6 +90,7 @@ function Auth({ setActive, setUser }) {
                       className="form-control input-text-box"
                       placeholder="Фамилия"
                       name="lastName"
+                      minLength={2}
                       value={lastName}
                       onChange={handleChange}
                     />
@@ -100,6 +102,7 @@ function Auth({ setActive, setUser }) {
                   type="email"
                   className="form-control input-text-box"
                   placeholder="Email"
+                  pattern="^\S+@\S+\.\S+$"
                   name="email"
                   value={email}
                   onChange={handleChange}
@@ -112,6 +115,7 @@ function Auth({ setActive, setUser }) {
                   placeholder="Пароль"
                   name="password"
                   value={password}
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}$"
                   onChange={handleChange}
                 />
               </div>
@@ -123,6 +127,7 @@ function Auth({ setActive, setUser }) {
                     placeholder="Повторить пароль"
                     name="confirmPassword"
                     value={confirmPassword}
+                    minLength={6}
                     onChange={handleChange}
                   />
                 </div>
@@ -133,7 +138,7 @@ function Auth({ setActive, setUser }) {
                   className={`btn ${!signUp ? "btn-sign-in" : "btn-sign-up"}`}
                   type="submit"
                 >
-                  {!signUp ? "Sign-in" : "Sign-up"}
+                  {!signUp ? "Войти" : "Зарегистрироваться"}
                 </button>
               </div>
             </form>
@@ -148,7 +153,7 @@ function Auth({ setActive, setUser }) {
                         style={{ textDecoration: "none", cursor: "pointer" }}
                         onClick={() => setSignUp(true)}
                       >
-                        Вход
+                        Зарегистрироваться
                       </span>
                     </p>
                   </div>
@@ -157,7 +162,7 @@ function Auth({ setActive, setUser }) {
                 <>
                   <div className="text-center justify-content-center mt-2 pt-2">
                     <p className="small fw-bold mt-2 pt-1 mb-0">
-                      Нужен аккаунт ?&nbsp;
+                      Есть аккаунт?&nbsp;
                       <span
                         style={{
                           textDecoration: "none",
@@ -166,7 +171,7 @@ function Auth({ setActive, setUser }) {
                         }}
                         onClick={() => setSignUp(false)}
                       >
-                        Зарегистрироваться
+                        Войти
                       </span>
                     </p>
                   </div>
