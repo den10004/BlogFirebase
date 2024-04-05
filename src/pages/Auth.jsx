@@ -7,6 +7,10 @@ import { useState } from "react";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { toastParameter } from "./../utils/toast";
+
 const initialState = {
   firstName: "",
   lastName: "",
@@ -40,11 +44,11 @@ function Auth({ setActive, setUser }) {
         setUser(user);
         setActive("home");
       } else {
-        return alert("Не все поля заполнены");
+        return toast.error("Не все поля заполены", toastParameter);
       }
     } else {
       if (password !== confirmPassword) {
-        return alert("Password don't match");
+        return toast.error("Пароли не совпадают", toastParameter);
       }
       if (firstName && lastName && email && password) {
         const { user } = await createUserWithEmailAndPassword(
@@ -55,7 +59,7 @@ function Auth({ setActive, setUser }) {
         await updateProfile(user, { displayName: `${firstName} ${lastName}` });
         setActive("home");
       } else {
-        return alert("Не все поля заполнены");
+        return toast.error("Не все поля заполены", toastParameter);
       }
     }
     navigate("/");

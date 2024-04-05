@@ -13,7 +13,9 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toastParameter } from "./../utils/toast";
+
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import SimpleMDE from "react-simplemde-editor";
@@ -29,18 +31,6 @@ function AddEditBlog({ user, setActive }) {
     comments: [],
     likes: [],
   };
-
-  const notify = () =>
-    toast("Блог создан", {
-      position: "top-center",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
 
   const categoryOption = [
     "Технологии",
@@ -85,7 +75,7 @@ function AddEditBlog({ user, setActive }) {
             author: user.displayName,
             userId: user.uid,
           });
-          notify();
+          toast.success("Блог опубликован", toastParameter);
         } catch (err) {
           console.log(err);
         }
@@ -97,13 +87,13 @@ function AddEditBlog({ user, setActive }) {
             author: user.displayName,
             userId: user.uid,
           });
-          alert("Блог загружен");
+          toast.success("Блог опубликован", toastParameter);
         } catch (err) {
           console.log(err);
         }
       }
     } else {
-      return alert("ошибка");
+      return toast.error("Не заполнены поля", toastParameter);
     }
 
     navigate("/");
@@ -152,8 +142,15 @@ function AddEditBlog({ user, setActive }) {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-            alert("Изображение загружено");
             setForm((prev) => ({ ...prev, imgUrl: downloadUrl }));
+            toast.success("Изображение загружено", {
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              theme: "light",
+            });
           });
         }
       );
@@ -177,19 +174,6 @@ function AddEditBlog({ user, setActive }) {
 
   return (
     <div className="container-fluid mb-4">
-      <button onClick={notify}>Notify!</button>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       <div className="container">
         <div className="col-12">
           <div className="text-center heading py-2">

@@ -56,9 +56,6 @@ button:hover {
   }
 }
 
-.editor {
-  margin: 30px -30px;
-}
 .editor :global .cm-s-easymde {
   border: 0;
   font-size: 22px;

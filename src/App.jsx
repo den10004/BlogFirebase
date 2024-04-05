@@ -11,6 +11,8 @@ import Auth from "./pages/Auth";
 import { auth } from "./firebase";
 import { signOut } from "firebase/auth";
 import TagBlog from "./pages/TagBlog";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [active, setActive] = useState("home");
@@ -42,6 +44,18 @@ function App() {
         active={active}
         user={user}
         handleLogout={handleLogout}
+      />
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
       />
 
       <Routes>

@@ -6,6 +6,10 @@ import { db } from "../firebase";
 import Tags from "../components/Tags";
 import FeatureBlogs from "../components/FeatureBlogs";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { toastParameter } from "./../utils/toast";
+
 function Home({ setActive, user, active }) {
   const [loading, setLoading] = useState(true);
   const [tags, setTags] = useState([]);
@@ -46,7 +50,7 @@ function Home({ setActive, user, active }) {
       try {
         setLoading(true);
         await deleteDoc(doc(db, "blogs", id));
-        alert("Блог успешно удалён");
+        toast.success("Блог удалён", toastParameter);
         setLoading(false);
       } catch (err) {
         console.log(err);
