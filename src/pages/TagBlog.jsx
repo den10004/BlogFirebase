@@ -1,7 +1,7 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import BlogSection from "../components/BlogSection";
+import BlogSection from "../components/BlogSection/index";
 import Spinner from "../components/Spinner";
 import { db } from "../firebase";
 

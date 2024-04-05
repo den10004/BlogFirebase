@@ -1,0 +1,15 @@
+.short-description {
+  font-size: 14px;
+  color: #777;
+  height: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.short-description img {
+  width: 0;
+}
+
+.details-description img {
+  width: 100%;
+}

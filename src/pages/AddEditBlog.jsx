@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "@pathofdev/react-tag-input/build/index.css";
 import { db, storage } from "../firebase";
@@ -13,6 +13,12 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
+
 // eslint-disable-next-line react/prop-types
 function AddEditBlog({ user, setActive }) {
   const initialState = {
@@ -24,6 +30,18 @@ function AddEditBlog({ user, setActive }) {
     likes: [],
   };
 
+  const notify = () =>
+    toast("Блог создан", {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
   const categoryOption = [
     "Технологии",
     "Путешевствия",
@@ -31,6 +49,21 @@ function AddEditBlog({ user, setActive }) {
     "Бизнес",
     "Другое",
   ];
+
+  const options = useMemo(
+    () => ({
+      spellChecker: false,
+      maxHeight: "400px",
+      autofocus: true,
+      placeholder: "Введите текст...",
+      status: false,
+      autosave: {
+        enabled: true,
+        delay: 1000,
+      },
+    }),
+    []
+  );
   const [form, setForm] = useState(initialState);
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(null);
@@ -52,8 +85,7 @@ function AddEditBlog({ user, setActive }) {
             author: user.displayName,
             userId: user.uid,
           });
-
-          alert("Блог создан");
+          notify();
         } catch (err) {
           console.log(err);
         }
@@ -77,8 +109,12 @@ function AddEditBlog({ user, setActive }) {
     navigate("/");
   };
 
-  const handleChange = (e) => {
+  const changeText = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const changeTextArea = (e) => {
+    setForm({ ...form, description: e });
   };
 
   const onCategoryChange = (e) => {
@@ -141,6 +177,19 @@ function AddEditBlog({ user, setActive }) {
 
   return (
     <div className="container-fluid mb-4">
+      <button onClick={notify}>Notify!</button>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="container">
         <div className="col-12">
           <div className="text-center heading py-2">
@@ -157,7 +206,7 @@ function AddEditBlog({ user, setActive }) {
                   placeholder="Название"
                   name="title"
                   value={title}
-                  onChange={handleChange}
+                  onChange={changeText}
                 />
               </div>
               <div className="col-12 py-3">
@@ -182,15 +231,13 @@ function AddEditBlog({ user, setActive }) {
                   ))}
                 </select>
               </div>
-              <div className="col-12 py-3">
-                <textarea
-                  className="form-control description-box"
-                  placeholder="Описание"
-                  value={description}
-                  name="description"
-                  onChange={handleChange}
-                />
-              </div>
+              <div className="col-12 py-3"></div>
+              <SimpleMDE
+                className="editor"
+                value={description}
+                onChange={changeTextArea}
+                options={options}
+              />
               <div className="mb-3">
                 <input
                   type="file"
@@ -204,7 +251,7 @@ function AddEditBlog({ user, setActive }) {
                   type="submit"
                   disabled={progress !== null && progress < 100}
                 >
-                  {id ? "Update" : "Submit"}
+                  {id ? "Обновить" : "Отправить"}
                 </button>
               </div>
             </form>

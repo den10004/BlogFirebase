@@ -42,7 +42,7 @@ function Home({ setActive, user, active }) {
   }
 
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure wanted to delete that blog ?")) {
+    if (window.confirm("ВЫ хотите удалить блог?")) {
       try {
         setLoading(true);
         await deleteDoc(doc(db, "blogs", id));
@@ -57,7 +57,10 @@ function Home({ setActive, user, active }) {
   return (
     <div className="container-fluid pb-4 pt-4 padding">
       <div className="container padding">
-        <div className="row mx-0">
+        <div
+          className="row mx-0"
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
           <div className="col-md-8">
             <div className="blog-heading text-start py-2 mb-4">Блоги</div>
             {blogs.length === 0 && <h4>Блогов нет</h4>}

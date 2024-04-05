@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import FeatureBlogs from "../components/FeatureBlogs";
 import Tags from "../components/Tags";
 import { db } from "../firebase";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 function Details({ setActive, user }) {
   const userId = user?.uid;
@@ -81,20 +82,29 @@ function Details({ setActive, user }) {
       </div>
       <div className="container-fluid pb-4 pt-4 padding blog-single-content">
         <div className="container padding">
-          <div className="row mx-0">
-            <div className="col-md-8">
-              <span className="meta-info text-start">
-                By <p className="author">{blog?.author}</p> -&nbsp;
+          <div
+            className="row"
+            style={{
+              width: "100%;",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <div className="col-md-8 details-description">
+              <span className="meta-info">
+                Создан <p className="author">{blog?.author}</p> -&nbsp;
                 {blog?.timestamp.toDate().toDateString()}
               </span>
-              <p className="text-start">{blog?.description}</p>
-              <div className="text-start">
+
+              <ReactMarkdown children={blog?.description} />
+
+              <div className="">
                 <Tags tags={blog?.tags} />
               </div>
               <br />
             </div>
             <div className="col-md-3">
-              <div className="blog-heading text-start py-2 mb-4">Тэги</div>
+              <div className="blog-heading  py-2 mb-4">Тэги</div>
               <Tags tags={tags} />
               <FeatureBlogs title={"Recent Blogs"} blogs={blogs} />
             </div>

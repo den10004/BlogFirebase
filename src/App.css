@@ -223,22 +223,7 @@
   font-weight: 600;
   font-size: 15px !important;
 }
-.short-description {
-  font-size: 14px;
-  color: #777;
-}
-.btn-read {
-  background: #544e66 !important;
-  -webkit-border-radius: 0 !important;
-  -moz-border-radius: 0 !important;
-  -ms-border-radius: 0 !important;
-  border-radius: 0 !important;
-  color: #fff !important;
-  padding: 5px 10px !important;
-  float: left;
-  margin-top: 10px;
-  font-size: 14px;
-}
+
 .blog-title-box {
   width: 38.2%;
   z-index: 555;
@@ -289,10 +274,6 @@
 .blog-single-content {
   z-index: 999;
   background: white;
-}
-.blog-single-content p,
-.blog-single-content ul li {
-  font-size: 1.05rem;
 }
 
 .tags > a {
