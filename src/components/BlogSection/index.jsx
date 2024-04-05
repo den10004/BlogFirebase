@@ -41,7 +41,26 @@ const BlogSection = ({
       <div className="col-md-7">
         <Link to={`/detail/${id}`}>
           <div className="text-start">
-            <h6 className="category catg-color">{category}</h6>
+            {category === "Путешевствия" && (
+              <h6 className="category catg-color bgc4287f5">{category}</h6>
+            )}
+            {category === "Технологии" && (
+              <h6 className="category catg-color bgcc43421">{category}</h6>
+            )}
+            {category === "Новости" && (
+              <h6 className="category catg-color bgc32CD32">{category}</h6>
+            )}
+            {category === "Бизнес" && (
+              <h6 className="category catg-color bgcc808000">{category}</h6>
+            )}
+
+            {category !== "Путешевствия" &&
+              category !== "Технологии" &&
+              category !== "Бизнес" &&
+              category !== "Новости" && (
+                <h6 className="category catg-color bgc000000">{category}</h6>
+              )}
+
             <span className="title py-2">{title}</span>
             <span className="meta-info">
               <p className="author">{author}</p> -&nbsp;

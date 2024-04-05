@@ -98,9 +98,6 @@ function Details({ setActive, user }) {
 
               <ReactMarkdown children={blog?.description} />
 
-              <div className="">
-                <Tags tags={blog?.tags} />
-              </div>
               <br />
             </div>
             <div className="col-md-3">

@@ -190,7 +190,6 @@
 .category {
   display: inline-block;
   position: relative;
-  background-color: #4287f5;
   padding: 4px 8px;
   color: #fff;
   text-decoration: none;
@@ -200,6 +199,27 @@
   font-weight: 700;
   border-radius: 4px;
 }
+
+.bgc4287f5 {
+  background-color: #4287f5;
+}
+
+.bgcc43421 {
+  background-color: #c43421;
+}
+
+.bgc32CD32 {
+  background-color: #32cd32;
+}
+
+.bgcc808000 {
+  background-color: #808000;
+}
+
+.bgc000000 {
+  background-color: #000000;
+}
+
 .fa-trash {
   color: #c43421 !important;
 }
