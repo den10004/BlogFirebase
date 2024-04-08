@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Tags = ({ tags }) => {
   return (
@@ -6,12 +6,12 @@ const Tags = ({ tags }) => {
       <div className="tags">
         {tags?.map((tag, index) => (
           <p className="tag" key={index}>
-            <Link
+            <NavLink
               to={`/tag/${tag}`}
               style={{ textDecoration: "none", color: "black" }}
             >
               {tag}
-            </Link>
+            </NavLink>
           </p>
         ))}
       </div>

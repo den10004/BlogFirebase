@@ -4,6 +4,7 @@ import BlogSection from "../components/BlogSection";
 import Spinner from "../components/Spinner";
 import { db } from "../firebase";
 import Tags from "../components/Tags";
+import Category from "../components/Category";
 import FeatureBlogs from "../components/FeatureBlogs";
 import { useNavigate } from "react-router-dom";
 
@@ -63,6 +64,15 @@ function Home({ setActive, user, active }) {
     }
   };
 
+  let uniqueCategory = [];
+  blogs.filter(function (item) {
+    let i = uniqueCategory.findIndex((i) => i.category == item.category);
+    if (i <= -1) {
+      uniqueCategory.push(item);
+    }
+    return null;
+  });
+
   return (
     <div className="container-fluid pb-4 pt-4 padding">
       <div className="container padding">
@@ -100,7 +110,12 @@ function Home({ setActive, user, active }) {
           <div className="col-md-3">
             <div className="blog-heading text-start py-2 mb-4">Тэги</div>
             <Tags tags={tags} />
-            <FeatureBlogs title={"Самые популярные"} blogs={blogs} />
+            <div className="blog-heading text-start py-2 mb-4">Категории</div>
+
+            {uniqueCategory?.map((uniqCat) => (
+              <Category key={uniqCat.id} uniqCat={uniqCat} />
+            ))}
+            <FeatureBlogs title={"Все блоги"} blogs={blogs} />
           </div>
         </div>
       </div>

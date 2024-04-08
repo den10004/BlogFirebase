@@ -13,6 +13,7 @@ import { signOut } from "firebase/auth";
 import TagBlog from "./pages/TagBlog";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CategoryBlocks from "./pages/CategoryBlocks";
 
 function App() {
   const [active, setActive] = useState("home");
@@ -67,6 +68,7 @@ function App() {
           path="/detail/:id"
           element={<Details setActive={setActive} user={user} />}
         />
+
         <Route
           path="/create"
           element={
@@ -89,6 +91,11 @@ function App() {
           element={<Auth setActive={setActive} setUser={setUser} />}
         />
         <Route path="/tag/:tag" element={<TagBlog setActive={setActive} />} />
+        <Route
+          path="/category/:category"
+          element={<CategoryBlocks setActive={setActive} />}
+        />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

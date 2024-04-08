@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./../App.css";
 
 // eslint-disable-next-line react/prop-types
@@ -31,7 +31,7 @@ function Header({ active, setActive, user, handleLogout }) {
                 className="navbar-nav me-auto mb-2 mb-lg-0"
                 style={{ display: "flex" }}
               >
-                <Link to="/" style={{ textDecoration: "none" }}>
+                <NavLink to="/" style={{ textDecoration: "none" }}>
                   <li
                     className={`nav-item nav-link ${
                       active === "home" ? "active" : ""
@@ -40,10 +40,10 @@ function Header({ active, setActive, user, handleLogout }) {
                   >
                     Главная
                   </li>
-                </Link>
+                </NavLink>
 
                 {userId && (
-                  <Link to="/create" style={{ textDecoration: "none" }}>
+                  <NavLink to="/create" style={{ textDecoration: "none" }}>
                     <li
                       className={`nav-item nav-link ${
                         active === "create" ? "active" : ""
@@ -52,10 +52,10 @@ function Header({ active, setActive, user, handleLogout }) {
                     >
                       Создать блог
                     </li>
-                  </Link>
+                  </NavLink>
                 )}
 
-                <Link to="/about" style={{ textDecoration: "none" }}>
+                <NavLink to="/about" style={{ textDecoration: "none" }}>
                   <li
                     className={`nav-item nav-link ${
                       active === "about" ? "active" : ""
@@ -64,7 +64,7 @@ function Header({ active, setActive, user, handleLogout }) {
                   >
                     О блоге
                   </li>
-                </Link>
+                </NavLink>
               </ul>
               <div className="row g-3">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -90,7 +90,7 @@ function Header({ active, setActive, user, handleLogout }) {
                       </li>
                     </>
                   ) : (
-                    <Link to="/auth" style={{ textDecoration: "none" }}>
+                    <NavLink to="/auth" style={{ textDecoration: "none" }}>
                       <li
                         className={`nav-item nav-link ${
                           active === "login" ? "active" : ""
@@ -99,7 +99,7 @@ function Header({ active, setActive, user, handleLogout }) {
                       >
                         Вход
                       </li>
-                    </Link>
+                    </NavLink>
                   )}
                 </ul>
               </div>

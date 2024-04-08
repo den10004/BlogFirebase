@@ -1,8 +1,9 @@
 import FontAwesome from "react-fontawesome";
-import { Link } from "react-router-dom";
-import "./styles.css";
+import { NavLink } from "react-router-dom";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { convertDate } from "../../utils/converData";
+
+import "./styles.css";
 
 const BlogSection = ({
   id,
@@ -19,7 +20,7 @@ const BlogSection = ({
 }) => {
   return (
     <>
-      <Link to={`/detail/${id}`}>
+      <NavLink to={`/detail/${id}`}>
         <div className="row pb-4" key={id}>
           <div className="col-md-5">
             <div className="hover-blogs-img">
@@ -73,11 +74,13 @@ const BlogSection = ({
               <ReactMarkdown children={description} />
             </div>
 
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div
+              style={{ display: "flex", alignItems: "center", color: "red" }}
+            >
               <svg
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
                 width="20"
                 height="18"
                 viewBox="0 0 25 22"
@@ -99,18 +102,18 @@ const BlogSection = ({
                   onClick={() => handleDelete(id)}
                 />
 
-                <Link to={`/update/${id}`}>
+                <NavLink to={`/update/${id}`}>
                   <FontAwesome
                     name="edit"
                     style={{ cursor: "pointer" }}
                     size="2x"
                   />
-                </Link>
+                </NavLink>
               </div>
             )}
           </div>
         </div>
-      </Link>
+      </NavLink>
     </>
   );
 };
