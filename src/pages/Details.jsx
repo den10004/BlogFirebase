@@ -7,6 +7,8 @@ import {
   query,
   orderBy,
   where,
+  serverTimestamp,
+  updateDoc,
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -15,6 +17,7 @@ import Tags from "../components/Tags";
 import { db } from "../firebase";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { convertDate } from "../utils/converData";
+import Like from "../components/Like";
 
 function Details({ setActive, user }) {
   const userId = user?.uid;
@@ -23,6 +26,7 @@ function Details({ setActive, user }) {
   const [blog, setBlog] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [tags, setTags] = useState([]);
+  let [likes, setLikes] = useState([]);
 
   useEffect(() => {
     const getRecentBlogs = async () => {
@@ -48,6 +52,7 @@ function Details({ setActive, user }) {
     let tags = [];
     blogs.docs.map((doc) => tags.push(...doc.get("tags")));
     let uniqueTags = [...new Set(tags)];
+    setLikes(blogDetail.data().likes ? blogDetail.data().likes : []);
     setTags(uniqueTags);
     setBlog(blogDetail.data());
     const relatedBlogsQuery = query(
@@ -63,6 +68,26 @@ function Details({ setActive, user }) {
 
     setActive(null);
     setLoading(false);
+  };
+
+  const handleLike = async () => {
+    if (userId) {
+      if (blog?.likes) {
+        const index = likes.findIndex((id) => id === userId);
+        if (index === -1) {
+          likes.push(userId);
+          setLikes([...new Set(likes)]);
+        } else {
+          likes = likes.filter((id) => id !== userId);
+          setLikes(likes);
+        }
+      }
+      await updateDoc(doc(db, "blogs", id), {
+        ...blog,
+        likes,
+        timestamp: serverTimestamp(),
+      });
+    }
   };
 
   useEffect(() => {
@@ -94,6 +119,7 @@ function Details({ setActive, user }) {
               <span className="meta-info">
                 Создан <p className="author">{blog?.author}</p> -&nbsp;
                 {convertDate(new Date(blog?.timestamp.seconds * 1000))}
+                <Like handleLike={handleLike} likes={likes} userId={userId} />
               </span>
 
               <ReactMarkdown children={blog?.description} />
