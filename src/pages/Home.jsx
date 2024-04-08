@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toastParameter } from "./../utils/toast";
 
+// eslint-disable-next-line react/prop-types
 function Home({ setActive, user, active }) {
   const [loading, setLoading] = useState(true);
   const [tags, setTags] = useState([]);
@@ -61,14 +62,28 @@ function Home({ setActive, user, active }) {
   return (
     <div className="container-fluid pb-4 pt-4 padding">
       <div className="container padding">
-        <div
-          className="row mx-0"
-          style={{ display: "flex", justifyContent: "space-between" }}
-        >
+        <div className="row mx-0">
           <div className="col-md-8">
-            <div className="blog-heading text-start py-2 mb-4">Блоги</div>
-            {blogs.length === 0 && <h4>Блогов нет</h4>}
+            <div
+              className="blog-heading text-start py-2 mb-4"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              Блоги
+              <div>
+                <p style={{ marginBottom: "0", fontSize: "16px" }}>
+                  Количество блогов: {blogs.length}
+                </p>
+              </div>
+            </div>
 
+            {blogs.length === 0 && (
+              <h4 className="text-start py-2 mb-4">Блогов нет</h4>
+            )}
+            <h4 className="text-start py-2 mb-4"></h4>
             {blogs?.map((blog) => (
               <BlogSection
                 key={blog.id}

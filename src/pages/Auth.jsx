@@ -182,6 +182,10 @@ function Auth({ setActive, setUser }) {
                 </>
               )}
             </div>
+            <div>
+              <div> логин: e@2.ru</div>
+              <div>пароль: qwerty</div>
+            </div>
           </div>
         </div>
       </div>
