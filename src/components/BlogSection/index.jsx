@@ -2,6 +2,7 @@ import FontAwesome from "react-fontawesome";
 import { Link } from "react-router-dom";
 import "./styles.css";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { convertDate } from "../../utils/converData";
 
 const BlogSection = ({
   id,
@@ -33,7 +34,7 @@ const BlogSection = ({
                       padding: "10px",
                     }}
                   >
-                    <h3>Нет изображения</h3>
+                    <h3 style={{ color: "black" }}>Нет изображения</h3>
                   </div>
                 )}
               </div>
@@ -64,7 +65,7 @@ const BlogSection = ({
               <span className="title py-2">{title}</span>
               <span className="meta-info">
                 <p className="author">{author}</p> -&nbsp;
-                {timestamp.toDate().toDateString()}
+                {convertDate(new Date(timestamp.seconds * 1000))}
               </span>
             </div>
             <div className="short-description text-start">

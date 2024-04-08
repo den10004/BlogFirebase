@@ -5,6 +5,7 @@ import Spinner from "../components/Spinner";
 import { db } from "../firebase";
 import Tags from "../components/Tags";
 import FeatureBlogs from "../components/FeatureBlogs";
+import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,6 +16,8 @@ function Home({ setActive, user, active }) {
   const [loading, setLoading] = useState(true);
   const [tags, setTags] = useState([]);
   const [blogs, setBlogs] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsub = onSnapshot(
@@ -53,6 +56,7 @@ function Home({ setActive, user, active }) {
         await deleteDoc(doc(db, "blogs", id));
         toast.success("Блог удалён", toastParameter);
         setLoading(false);
+        navigate("/");
       } catch (err) {
         console.log(err);
       }
@@ -83,7 +87,7 @@ function Home({ setActive, user, active }) {
             {blogs.length === 0 && (
               <h4 className="text-start py-2 mb-4">Блогов нет</h4>
             )}
-            <h4 className="text-start py-2 mb-4"></h4>
+
             {blogs?.map((blog) => (
               <BlogSection
                 key={blog.id}

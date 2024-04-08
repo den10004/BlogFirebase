@@ -76,7 +76,11 @@ function App() {
         <Route
           path="/update/:id"
           element={
-            user?.uid ? <AddEditBlog user={user} /> : <Navigate to="/" />
+            user?.uid ? (
+              <AddEditBlog user={user} setActive={setActive} />
+            ) : (
+              <Navigate to="/" />
+            )
           }
         />
         <Route path="/about" element={<About />} />

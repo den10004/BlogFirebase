@@ -124,8 +124,9 @@ function AddEditBlog({ user, setActive }) {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
+          //  console.log("Upload is " + progress + "% done");
           setProgress(progress);
+          /*
           switch (snapshot.state) {
             case "paused":
               console.log("Upload is paused");
@@ -135,7 +136,7 @@ function AddEditBlog({ user, setActive }) {
               break;
             default:
               break;
-          }
+          }*/
         },
         (error) => {
           console.log(error);
@@ -177,7 +178,7 @@ function AddEditBlog({ user, setActive }) {
       <div className="container">
         <div className="col-12">
           <div className="text-center heading py-2">
-            {id ? "Update Blog" : "Create Blog"}
+            {id ? "Обновить блог" : "Создать блог"}
           </div>
         </div>
         <div className="row h-100 justify-content-center align-items-center">

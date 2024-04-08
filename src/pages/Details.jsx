@@ -14,6 +14,7 @@ import FeatureBlogs from "../components/FeatureBlogs";
 import Tags from "../components/Tags";
 import { db } from "../firebase";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { convertDate } from "../utils/converData";
 
 function Details({ setActive, user }) {
   const userId = user?.uid;
@@ -76,7 +77,6 @@ function Details({ setActive, user }) {
       >
         <div className="overlay"></div>
         <div className="blog-title">
-          <span>{blog?.timestamp.toDate().toDateString()}</span>
           <h2>{blog?.title}</h2>
         </div>
       </div>
@@ -93,7 +93,7 @@ function Details({ setActive, user }) {
             <div className="col-md-8 details-description">
               <span className="meta-info">
                 Создан <p className="author">{blog?.author}</p> -&nbsp;
-                {blog?.timestamp.toDate().toDateString()}
+                {convertDate(new Date(blog?.timestamp.seconds * 1000))}
               </span>
 
               <ReactMarkdown children={blog?.description} />
