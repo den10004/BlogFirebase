@@ -8,8 +8,10 @@ import {
   orderBy,
   where,
   serverTimestamp,
+  Timestamp,
   updateDoc,
 } from "firebase/firestore";
+import { isEmpty } from "lodash";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import FeatureBlogs from "../components/FeatureBlogs";
@@ -18,11 +20,17 @@ import { db } from "../firebase";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { convertDate } from "../utils/converData";
 import Like from "../components/Like";
+import CommentBox from "../components/CommentsBox";
+import UserComments from "../components/UserComments";
+
+import { toast } from "react-toastify";
 
 function Details({ setActive, user }) {
   const userId = user?.uid;
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [userComment, setUserComment] = useState("");
   const [blog, setBlog] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [tags, setTags] = useState([]);
@@ -52,6 +60,7 @@ function Details({ setActive, user }) {
     let tags = [];
     blogs.docs.map((doc) => tags.push(...doc.get("tags")));
     let uniqueTags = [...new Set(tags)];
+    setComments(blogDetail.data().comments ? blogDetail.data().comments : []);
     setLikes(blogDetail.data().likes ? blogDetail.data().likes : []);
     setTags(uniqueTags);
     setBlog(blogDetail.data());
@@ -68,6 +77,24 @@ function Details({ setActive, user }) {
 
     setActive(null);
     setLoading(false);
+  };
+
+  const handleComment = async (e) => {
+    e.preventDefault();
+    comments.push({
+      createdAt: Timestamp.fromDate(new Date()),
+      userId,
+      name: user?.displayName,
+      body: userComment,
+    });
+    toast.success("Comment posted successfully");
+    await updateDoc(doc(db, "blogs", id), {
+      ...blog,
+      comments,
+      timestamp: serverTimestamp(),
+    });
+    setComments(comments);
+    setUserComment("");
   };
 
   const handleLike = async () => {
@@ -125,6 +152,31 @@ function Details({ setActive, user }) {
               <ReactMarkdown children={blog?.description} />
 
               <br />
+
+              <div className="custombox">
+                <div className="scroll">
+                  <h4 className="small-title">{comments?.length} Comment</h4>
+                  {isEmpty(comments) ? (
+                    <UserComments
+                      msg={
+                        "No Comment yet posted on this blog. Be the first to comment"
+                      }
+                    />
+                  ) : (
+                    <>
+                      {comments?.map((comment) => (
+                        <UserComments {...comment} />
+                      ))}
+                    </>
+                  )}
+                </div>
+              </div>
+              <CommentBox
+                userId={userId}
+                userComment={userComment}
+                setUserComment={setUserComment}
+                handleComment={handleComment}
+              />
             </div>
             <div className="col-md-3">
               <div className="blog-heading  py-2 mb-4">Тэги</div>

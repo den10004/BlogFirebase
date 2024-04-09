@@ -115,7 +115,8 @@ function Home({ setActive, user, active }) {
             {uniqueCategory?.map((uniqCat) => (
               <Category key={uniqCat.id} uniqCat={uniqCat} />
             ))}
-            <FeatureBlogs title={"Все блоги"} blogs={blogs} />
+            {/*
+            <FeatureBlogs title={"Все блоги"} blogs={blogs} />*/}
           </div>
         </div>
       </div>
