@@ -1,4 +1,4 @@
-import React from "react";
+import { convertDate } from "../utils/converData";
 
 const UserComments = ({ name, body, createdAt, msg }) => {
   return (
@@ -20,7 +20,10 @@ const UserComments = ({ name, body, createdAt, msg }) => {
                   </div>
                   <div className="media-body">
                     <h3 className="text-start media-heading user_name">
-                      {name} <small>{createdAt.toDate().toDateString()}</small>
+                      {name}
+                      <small>
+                        {convertDate(new Date(createdAt.seconds * 1000))}
+                      </small>
                     </h3>
                     <p className="text-start">{body}</p>
                   </div>

@@ -10,10 +10,11 @@ import {
   serverTimestamp,
   Timestamp,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { isEmpty } from "lodash";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import FeatureBlogs from "../components/FeatureBlogs";
 import Tags from "../components/Tags";
 import { db } from "../firebase";
@@ -24,6 +25,9 @@ import CommentBox from "../components/CommentsBox";
 import UserComments from "../components/UserComments";
 
 import { toast } from "react-toastify";
+import FontAwesome from "react-fontawesome";
+import { toastParameter } from "../utils/toast";
+import { useNavigate } from "react-router-dom";
 
 function Details({ setActive, user }) {
   const userId = user?.uid;
@@ -36,6 +40,7 @@ function Details({ setActive, user }) {
   const [tags, setTags] = useState([]);
   let [likes, setLikes] = useState([]);
 
+  const navigate = useNavigate();
   useEffect(() => {
     const getRecentBlogs = async () => {
       const blogRef = collection(db, "blogs");
@@ -50,6 +55,20 @@ function Details({ setActive, user }) {
 
     getRecentBlogs();
   }, []);
+
+  const handleDelete = async (id) => {
+    if (window.confirm("ВЫ хотите удалить блог?")) {
+      try {
+        setLoading(true);
+        await deleteDoc(doc(db, "blogs", id));
+        toast.success("Блог удалён", toastParameter);
+        setLoading(false);
+        navigate("/");
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
 
   const getBlogDetail = async () => {
     setLoading(true);
@@ -146,22 +165,37 @@ function Details({ setActive, user }) {
               <span className="meta-info">
                 Создан <p className="author">{blog?.author}</p> -&nbsp;
                 {convertDate(new Date(blog?.timestamp.seconds * 1000))}
-                <Like handleLike={handleLike} likes={likes} userId={userId} />
               </span>
 
               <ReactMarkdown children={blog?.description} />
+              {user && user.uid === userId && (
+                <div style={{ float: "right" }}>
+                  <FontAwesome
+                    name="trash"
+                    style={{ margin: "5px", cursor: "pointer" }}
+                    size="2x"
+                    onClick={() => handleDelete(id)}
+                  />
 
+                  <NavLink to={`/update/${id}`}>
+                    <FontAwesome
+                      name="edit"
+                      style={{ cursor: "pointer" }}
+                      size="2x"
+                    />
+                  </NavLink>
+                  <Like handleLike={handleLike} likes={likes} userId={userId} />
+                </div>
+              )}
               <br />
 
               <div className="custombox">
                 <div className="scroll">
-                  <h4 className="small-title">{comments?.length} Comment</h4>
+                  <h4 className="small-title">
+                    Комментариев: {comments?.length}
+                  </h4>
                   {isEmpty(comments) ? (
-                    <UserComments
-                      msg={
-                        "No Comment yet posted on this blog. Be the first to comment"
-                      }
-                    />
+                    <UserComments msg={"Комментариев нет"} />
                   ) : (
                     <>
                       {comments?.map((comment) => (

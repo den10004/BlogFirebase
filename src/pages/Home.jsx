@@ -18,7 +18,7 @@ function Home({ setActive, user, active }) {
   const [tags, setTags] = useState([]);
   const [blogs, setBlogs] = useState(null);
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   useEffect(() => {
     const unsub = onSnapshot(
@@ -49,7 +49,7 @@ function Home({ setActive, user, active }) {
   if (loading) {
     return <Spinner />;
   }
-
+  /*
   const handleDelete = async (id) => {
     if (window.confirm("ВЫ хотите удалить блог?")) {
       try {
@@ -62,7 +62,7 @@ function Home({ setActive, user, active }) {
         console.log(err);
       }
     }
-  };
+  };*/
 
   let uniqueCategory = [];
   blogs.filter(function (item) {
@@ -102,7 +102,7 @@ function Home({ setActive, user, active }) {
               <BlogSection
                 key={blog.id}
                 user={user}
-                handleDelete={handleDelete}
+                //  handleDelete={handleDelete}
                 {...blog}
               />
             ))}
