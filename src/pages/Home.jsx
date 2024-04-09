@@ -1,24 +1,17 @@
-import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import BlogSection from "../components/BlogSection";
 import Spinner from "../components/Spinner";
 import { db } from "../firebase";
 import Tags from "../components/Tags";
 import Category from "../components/Category";
-import FeatureBlogs from "../components/FeatureBlogs";
-import { useNavigate } from "react-router-dom";
-
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { toastParameter } from "./../utils/toast";
+//import FeatureBlogs from "../components/FeatureBlogs";
 
 // eslint-disable-next-line react/prop-types
 function Home({ setActive, user, active }) {
   const [loading, setLoading] = useState(true);
   const [tags, setTags] = useState([]);
   const [blogs, setBlogs] = useState(null);
-
-  //const navigate = useNavigate();
 
   useEffect(() => {
     const unsub = onSnapshot(
@@ -49,20 +42,6 @@ function Home({ setActive, user, active }) {
   if (loading) {
     return <Spinner />;
   }
-  /*
-  const handleDelete = async (id) => {
-    if (window.confirm("ВЫ хотите удалить блог?")) {
-      try {
-        setLoading(true);
-        await deleteDoc(doc(db, "blogs", id));
-        toast.success("Блог удалён", toastParameter);
-        setLoading(false);
-        navigate("/");
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };*/
 
   let uniqueCategory = [];
   blogs.filter(function (item) {
@@ -99,12 +78,7 @@ function Home({ setActive, user, active }) {
             )}
 
             {blogs?.map((blog) => (
-              <BlogSection
-                key={blog.id}
-                user={user}
-                //  handleDelete={handleDelete}
-                {...blog}
-              />
+              <BlogSection key={blog.id} user={user} {...blog} />
             ))}
           </div>
           <div className="col-md-3">

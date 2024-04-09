@@ -25,7 +25,6 @@ import CommentBox from "../components/CommentsBox";
 import UserComments from "../components/UserComments";
 
 import { toast } from "react-toastify";
-import FontAwesome from "react-fontawesome";
 import { toastParameter } from "../utils/toast";
 import { useNavigate } from "react-router-dom";
 
@@ -106,7 +105,7 @@ function Details({ setActive, user }) {
       name: user?.displayName,
       body: userComment,
     });
-    toast.success("Comment posted successfully");
+    toast.success("Комментарий опубликован");
     await updateDoc(doc(db, "blogs", id), {
       ...blog,
       comments,
@@ -156,7 +155,7 @@ function Details({ setActive, user }) {
           <div
             className="row"
             style={{
-              width: "100%;",
+              width: "100%",
               display: "flex",
               justifyContent: "space-between",
             }}
@@ -169,20 +168,57 @@ function Details({ setActive, user }) {
 
               <ReactMarkdown children={blog?.description} />
               {user && user.uid === userId && (
-                <div style={{ float: "right" }}>
-                  <FontAwesome
-                    name="trash"
-                    style={{ margin: "5px", cursor: "pointer" }}
-                    size="2x"
-                    onClick={() => handleDelete(id)}
-                  />
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <button onClick={() => handleDelete(id)}>
+                    <svg
+                      style={{ width: "25px" }}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+
+                      <g
+                        id="SVGRepo_tracerCarrier"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          d="M3 3L21 21M18 6L17.6 12M17.2498 17.2527L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6H4M16 6L15.4559 4.36754C15.1837 3.55086 14.4194 3 13.5585 3H10.4416C9.94243 3 9.47576 3.18519 9.11865 3.5M11.6133 6H20M14 14V17M10 10V17"
+                          stroke="#000000"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />{" "}
+                      </g>
+                    </svg>
+                  </button>
 
                   <NavLink to={`/update/${id}`}>
-                    <FontAwesome
-                      name="edit"
-                      style={{ cursor: "pointer" }}
-                      size="2x"
-                    />
+                    <svg
+                      style={{ width: "25px" }}
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="#000000"
+                    >
+                      <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+                      <g
+                        id="SVGRepo_tracerCarrier"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <g id="SVGRepo_iconCarrier">
+                        <path d="M22 7.662l1-1V18h-7v4.745L11.255 18H1V2h16.763l-1 1H2v14h9.668L15 20.331V17h7zm1.657-5.192a.965.965 0 0 1 .03 1.385l-9.325 9.324-4.097 1.755a.371.371 0 0 1-.487-.487l1.755-4.097 9.31-9.309a.98.98 0 0 1 1.385 0zm-10.1 9.965l-1.28-1.28-.961 2.24zm7.243-7.11l-1.414-1.413-6.469 6.47 1.414 1.413zm1.865-2.445l-.804-.838a.42.42 0 0 0-.6-.006l-1.168 1.168 1.414 1.415 1.152-1.152a.42.42 0 0 0 .006-.587z" />
+                        <path fill="none" d="M0 0h24v24H0z" />
+                      </g>
+                    </svg>
                   </NavLink>
                   <Like handleLike={handleLike} likes={likes} userId={userId} />
                 </div>

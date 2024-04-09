@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
+// eslint-disable-next-line react/prop-types
 const CommentBox = ({ userId, userComment, setUserComment, handleComment }) => {
   const navigate = useNavigate();
   return (
@@ -24,6 +25,7 @@ const CommentBox = ({ userId, userComment, setUserComment, handleComment }) => {
       ) : (
         <>
           <button
+            disabled={!userComment}
             className="btn btn-primary"
             type="submit"
             onClick={handleComment}
