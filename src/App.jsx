@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import "./App.css";
 import Home from "./pages/Home";
 import Details from "./pages/Details";
 import AddEditBlog from "./pages/AddEditBlog";
+import CategoryBlocks from "./pages/CategoryBlocks";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ import { signOut } from "firebase/auth";
 import TagBlog from "./pages/TagBlog";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import CategoryBlocks from "./pages/CategoryBlocks";
+import "./App.css";
 
 function App() {
   const [active, setActive] = useState("home");
