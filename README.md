@@ -6,7 +6,7 @@
 - [GitHub](https://github.com/den10004/BlogFirebase.git)
 
 тестовый аккаунт
-логин test@test.ru
+логин a@a.ru
 пароль 123456
 
 гость аккаунт

@@ -7,7 +7,6 @@ import {
   query,
   orderBy,
   where,
-  serverTimestamp,
   Timestamp,
   updateDoc,
   deleteDoc,
@@ -30,6 +29,7 @@ import { useNavigate } from "react-router-dom";
 
 function Details({ setActive, user }) {
   const userId = user?.uid;
+
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState([]);
@@ -86,7 +86,6 @@ function Details({ setActive, user }) {
       blogRef,
       where("tags", "array-contains-any", blogDetail.data().tags, limit(3))
     );
-
     const relatedBlogSnapshot = await getDocs(relatedBlogsQuery);
     const relatedBlogs = [];
     relatedBlogSnapshot.forEach((doc) => {
@@ -109,10 +108,20 @@ function Details({ setActive, user }) {
     await updateDoc(doc(db, "blogs", id), {
       ...blog,
       comments,
-      timestamp: serverTimestamp(),
+      /*    timestamp: serverTimestamp(),*/
     });
     setComments(comments);
     setUserComment("");
+  };
+
+  const handleView = async () => {
+    const docRef = doc(db, "blogs", id);
+    const blogDetail = await getDoc(docRef);
+    const view = blogDetail.data().view + 1;
+    await updateDoc(doc(db, "blogs", id), {
+      ...blog,
+      view,
+    });
   };
 
   const handleLike = async () => {
@@ -130,13 +139,14 @@ function Details({ setActive, user }) {
       await updateDoc(doc(db, "blogs", id), {
         ...blog,
         likes,
-        timestamp: serverTimestamp(),
+        /*    timestamp: serverTimestamp(),*/
       });
     }
   };
 
   useEffect(() => {
     id && getBlogDetail();
+    handleView();
   }, [id]);
 
   return (
@@ -254,7 +264,6 @@ function Details({ setActive, user }) {
             <div className="col-md-3">
               <div className="blog-heading  py-2 mb-4">Тэги</div>
               <Tags tags={tags} />
-              <FeatureBlogs title={"Recent Blogs"} blogs={blogs} />
             </div>
           </div>
         </div>

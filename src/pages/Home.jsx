@@ -5,7 +5,7 @@ import Spinner from "../components/Spinner";
 import { db } from "../firebase";
 import Tags from "../components/Tags";
 import Category from "../components/Category";
-//import FeatureBlogs from "../components/FeatureBlogs";
+import FeatureBlogs from "../components/FeatureBlogs";
 
 // eslint-disable-next-line react/prop-types
 function Home({ setActive, user, active }) {
@@ -89,8 +89,8 @@ function Home({ setActive, user, active }) {
             {uniqueCategory?.map((uniqCat) => (
               <Category key={uniqCat.id} uniqCat={uniqCat} />
             ))}
-            {/*
-            <FeatureBlogs title={"Все блоги"} blogs={blogs} />*/}
+
+            <FeatureBlogs title={"Популярные блоги"} blogs={blogs} />
           </div>
         </div>
       </div>

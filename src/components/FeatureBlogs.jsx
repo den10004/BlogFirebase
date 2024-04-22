@@ -1,12 +1,20 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
+// eslint-disable-next-line react/prop-types
 const FeatureBlogs = ({ blogs, title }) => {
+  // eslint-disable-next-line react/prop-types
+  blogs.sort(function (a, b) {
+    return b.view - a.view;
+  });
+
+  // eslint-disable-next-line react/prop-types
+  const slicedArray = blogs.slice(0, 5);
+
   const navigate = useNavigate();
   return (
     <div>
       <div className="blog-heading text-start pt-3 py-2 mb-4">{title}</div>
-      {blogs?.map((item) => (
+      {slicedArray?.map((item) => (
         <div
           className="row pb-3"
           key={item.id}

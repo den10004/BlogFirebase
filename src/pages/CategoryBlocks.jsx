@@ -40,6 +40,7 @@ const CategoryBlocks = ({ setActive }) => {
             Категории: <strong>{category.toLocaleUpperCase()}</strong>
           </div>
           {categoryBlogs?.map((item) => (
+            // eslint-disable-next-line react/jsx-key
             <div className="col-md-6">
               <BlogSection key={item.id} {...item} />
             </div>
