@@ -55,8 +55,11 @@ function Home({ setActive, user, active }) {
   return (
     <div className="container-fluid pb-4 pt-4 padding">
       <div className="container padding">
-        <div className="row mx-0">
-          <div className="col-md-8">
+        <div
+          className="row mx-0"
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <div style={{ width: "66%" }}>
             <div
               className="blog-heading text-start py-2 mb-4"
               style={{
@@ -81,7 +84,7 @@ function Home({ setActive, user, active }) {
               <BlogSection key={blog.id} user={user} {...blog} />
             ))}
           </div>
-          <div className="col-md-3">
+          <div style={{ width: "25%" }}>
             <div className="blog-heading text-start py-2 mb-4">Тэги</div>
             <Tags tags={tags} />
             <div className="blog-heading text-start py-2 mb-4">Категории</div>

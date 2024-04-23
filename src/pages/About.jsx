@@ -8,7 +8,7 @@ function About() {
               className="blog-heading text-start py-2 mb-4"
               style={{ borderBottom: 0 }}
             >
-              В разработке
+              Блог в разработке v 1.4.3
             </div>
           </div>
         </div>
