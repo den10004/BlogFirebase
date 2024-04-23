@@ -14,7 +14,6 @@ import {
 import { isEmpty } from "lodash";
 import { useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import FeatureBlogs from "../components/FeatureBlogs";
 import Tags from "../components/Tags";
 import { db } from "../firebase";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";

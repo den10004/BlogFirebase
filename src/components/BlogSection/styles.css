@@ -1,7 +1,7 @@
 .short-description {
   font-size: 14px;
-  color: #777;
-  height: 70px;
+  color: black;
+  height: 65px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
